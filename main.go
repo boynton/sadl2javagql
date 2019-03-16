@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/boynton/sadl-gql/graphql"
 	"github.com/boynton/sadl/parse"
+	"github.com/boynton/sadl2javagql/graphql"
 )
 
 func main() {

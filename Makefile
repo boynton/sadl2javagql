@@ -5,13 +5,13 @@ all:: bin/sadl2javagql
 
 bin/sadl2javagql::
 	mkdir -p bin
-	go build -o bin/sadl2javagql github.com/boynton/sadl-gql/cmd/sadl2javagql
+	go build -o bin/sadl2javagql github.com/boynton/sadl2javagql
 
 clean::
 	rm -rf gen bin
 
 proper::
-	go fmt github.com/boynton/sadl-gql/graphql
-	go vet github.com/boynton/sadl-gql/graphql
-	go fmt github.com/boynton/sadl-gql/cmd/sadl2javagql
-	go vet github.com/boynton/sadl-gql/cmd/sadl2javagql
+	go fmt github.com/boynton/sadl2javagql/graphql
+	go vet github.com/boynton/sadl2javagql/graphql
+	go fmt github.com/boynton/sadl2javagql
+	go vet github.com/boynton/sadl2javagql

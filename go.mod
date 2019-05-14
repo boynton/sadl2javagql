@@ -1,3 +1,3 @@
 module github.com/boynton/sadl2javagql
 
-require github.com/boynton/sadl v0.0.0-20190316023554-662756d19a21
+require github.com/boynton/sadl v0.0.0-20190514221853-1c2810085743

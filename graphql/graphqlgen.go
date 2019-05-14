@@ -8,16 +8,16 @@ import (
 	"path/filepath"
 
 	"github.com/boynton/sadl"
-	"github.com/boynton/sadl/gen/javagen"
+	"github.com/boynton/sadl/gen/java"
 )
 
 type Generator struct {
-	javagen.Generator
+	java.Generator
 	Graphql *Model
 }
 
 func NewGenerator(model *sadl.Model, outdir, srcdir, rezdir, pkg string, useLombok, useInstants, useGetters bool) *Generator {
-	jgen := javagen.NewGenerator(model, outdir, srcdir, rezdir, pkg, useLombok, useInstants, useGetters)
+	jgen := java.NewGenerator(model, outdir, srcdir, rezdir, pkg, useLombok, useInstants, useGetters)
 	gen := &Generator{
 		Generator: *jgen,
 	}
@@ -109,7 +109,7 @@ func (gen *Generator) graphqlSchema() string {
 		}
 	}
 	writer.WriteString("\ntype Query {")
-	for i, op := range gql.Operations {
+	for i, op := range gql.Actions {
 		opType := gen.graphqlTypeName(op.Return)
 		if i > 0 {
 			writer.WriteString(",")

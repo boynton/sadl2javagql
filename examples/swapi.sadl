@@ -19,27 +19,27 @@ type Film Struct {
 
 /* a typical web service interface */
 
-http GET "/parts/{id}" (operation=GetPart) {
+http GET "/parts/{id}" (action=GetPart) {
     id PartId (required)
     expect 200 {
         part Part
     }
 }
 
-http GET "/films/{id}" (operation=GetFilm) {
+http GET "/films/{id}" (action=GetFilm) {
     id FilmId (required)
     expect 200 {
         film Film
     }
 }
 
-http GET "/parts" (operation=ListParts) {
+http GET "/parts" (action=ListParts) {
     expect 200 {
         parts Array<Part>
     }
 }
 
-http GET "/films" (operation=ListFilms) {
+http GET "/films" (action=ListFilms) {
     expect 200 {
         films Array<Film>
     }
@@ -48,8 +48,8 @@ http GET "/films" (operation=ListFilms) {
 /* Graphql query operations bult on the above HTTP resources */
 
 graphql "/graphql" {
-   parts() Array<Part> (operation=ListParts)
-   films() Array<Film> (operation=ListFilms)
-   part(id String) Part (operation=GetPart)
-   film(id String) Film (operation=GetFilm)
+   parts() Array<Part> (action=ListParts)
+   films() Array<Film> (action=ListFilms)
+   part(id String) Part (action=GetPart)
+   film(id String) Film (action=GetFilm)
 }

@@ -1,2 +1,7 @@
 github.com/boynton/sadl v0.0.0-20190316023554-662756d19a21 h1:e1gtH1bhkQdHScwj8f3fCIEw2ai3fz9jSDIh8/pAmfQ=
 github.com/boynton/sadl v0.0.0-20190316023554-662756d19a21/go.mod h1:jPklD5sXsHuuHrn4JUQrvnzyga8LCON1hsY/xXhpHj8=
+github.com/boynton/sadl v0.0.0-20190514221853-1c2810085743 h1:2EEhSTA7khhs4P/MFHbGD12WYv9QYd7o0OGL0MGsrOg=
+github.com/boynton/sadl v0.0.0-20190514221853-1c2810085743/go.mod h1:3aWIqjxasnjcgmfssoVsx+cIPSN7MHzVKNpt5uO4CoE=
+github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=

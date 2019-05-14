@@ -147,7 +147,7 @@ func (gen *Generator) GraphqlFetchers() string {
 	gql := gen.Graphql
 	indent := "            "
 	result := ""
-	for _, op := range gql.Operations {
+	for _, op := range gql.Actions {
 		rType, _, _ := gen.TypeName(op.Return, op.Return.Type, true)
 		indent2 := indent + "            "
 		q := indent + `.type("Query", builder -> builder.dataFetcher("` + op.Name + `", new DataFetcher<` + rType + ">() {\n"

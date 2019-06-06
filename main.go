@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/boynton/sadl/parse"
+	"github.com/boynton/sadl"
 	"github.com/boynton/sadl2javagql/graphql"
 )
 
@@ -26,7 +26,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "usage: sadl2java -dir projdir -src relative_source_dir -rez relative_resource_dir -package java.package.name -pom -server -getters -lombok some_model.sadl\n")
 		os.Exit(1)
 	}
-	model, err := parse.File(argv[0], graphql.NewExtension())
+	model, err := sadl.ParseFile(argv[0], graphql.NewExtension())
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "*** %v\n", err)
 		os.Exit(1)

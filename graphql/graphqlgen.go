@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/boynton/sadl"
-	"github.com/boynton/sadl/gen/java"
+	"github.com/boynton/sadl/java"
 )
 
 type Generator struct {

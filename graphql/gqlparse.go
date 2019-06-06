@@ -4,14 +4,13 @@ import (
 	"fmt"
 
 	"github.com/boynton/sadl"
-	"github.com/boynton/sadl/parse"
 )
 
 type Model struct {
 	Path        string            `json:"path"`
 	Comment     string            `json:"comment,omitempty"`
 	Annotations map[string]string `json:"annotations,omitempty"`
-	Actions  []*Action      `json:"operations,omitempty"`
+	Actions     []*Action         `json:"operations,omitempty"`
 }
 
 type Action struct {
@@ -46,7 +45,7 @@ func (gql *Extension) Result() interface{} {
 	return gql.Model
 }
 
-func (gql *Extension) Parse(p *parse.Parser) error {
+func (gql *Extension) Parse(p *sadl.Parser) error {
 	path, err := p.ExpectString()
 	if err != nil {
 		return err
@@ -62,7 +61,7 @@ func (gql *Extension) Parse(p *parse.Parser) error {
 	if tok == nil {
 		return p.EndOfFileError()
 	}
-	if tok.Type == parse.OPEN_BRACE {
+	if tok.Type == sadl.OPEN_BRACE {
 		gql.Model.Comment = p.ParseTrailingComment(gql.Model.Comment)
 		comment := ""
 		for {
@@ -84,7 +83,7 @@ func (gql *Extension) Parse(p *parse.Parser) error {
 
 }
 
-func (gql *Extension) parseQuerySpec(p *parse.Parser, comment string) error {
+func (gql *Extension) parseQuerySpec(p *sadl.Parser, comment string) error {
 	qName, err := p.ExpectIdentifier()
 	if err != nil {
 		return err
@@ -113,22 +112,22 @@ func (gql *Extension) parseQuerySpec(p *parse.Parser, comment string) error {
 	return nil
 }
 
-func (gql *Extension) parseParams(p *parse.Parser, qName string) ([]*Param, error) {
+func (gql *Extension) parseParams(p *sadl.Parser, qName string) ([]*Param, error) {
 	params := make([]*Param, 0)
 	tok := p.GetToken()
 	if tok == nil {
 		return params, nil
 	}
-	if tok.Type == parse.OPEN_PAREN {
+	if tok.Type == sadl.OPEN_PAREN {
 		for {
 			tok := p.GetToken()
 			if tok == nil {
 				return nil, p.SyntaxError()
 			}
-			if tok.Type == parse.CLOSE_PAREN {
+			if tok.Type == sadl.CLOSE_PAREN {
 				return params, nil
 			}
-			if tok.Type == parse.SYMBOL {
+			if tok.Type == sadl.SYMBOL {
 				pName := tok.Text
 				pType, err := p.ExpectIdentifier()
 				if err != nil {
@@ -139,7 +138,7 @@ func (gql *Extension) parseParams(p *parse.Parser, qName string) ([]*Param, erro
 					Type: pType,
 				}
 				params = append(params, param)
-			} else if tok.Type == parse.COMMA {
+			} else if tok.Type == sadl.COMMA {
 				//ignore
 			} else {
 				return nil, p.SyntaxError()
@@ -152,7 +151,7 @@ func (gql *Extension) parseParams(p *parse.Parser, qName string) ([]*Param, erro
 
 }
 
-func (gql *Extension) IsAction(opname string, p *parse.Parser) bool {
+func (gql *Extension) IsAction(opname string, p *sadl.Parser) bool {
 	for _, op := range p.Model().Http {
 		if op.Name == opname {
 			return true
@@ -161,7 +160,7 @@ func (gql *Extension) IsAction(opname string, p *parse.Parser) bool {
 	return false
 }
 
-func (gql *Extension) Validate(p *parse.Parser) error {
+func (gql *Extension) Validate(p *sadl.Parser) error {
 	for _, op := range gql.Model.Actions {
 		if !gql.IsAction(op.Provider, p) {
 			return fmt.Errorf("GraphQL query action '%s' has an undefined HTTP action: %q", op.Name, op.Provider)

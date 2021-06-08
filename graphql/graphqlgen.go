@@ -16,8 +16,9 @@ type Generator struct {
 	Graphql *Model
 }
 
-func NewGenerator(model *sadl.Model, outdir, srcdir, rezdir, pkg string, useLombok, useInstants, useGetters bool) *Generator {
-	jgen := java.NewGenerator(model, outdir, srcdir, rezdir, pkg, useLombok, useInstants, useGetters)
+//func NewGenerator(model *sadl.Model, outdir, srcdir, rezdir, pkg string, useLombok, useInstants, useGetters bool) *Generator {
+func NewGenerator(model *sadl.Model, outdir string, config *sadl.Data) *Generator {
+	jgen := java.NewGenerator(model, outdir, config)
 	gen := &Generator{
 		Generator: *jgen,
 	}

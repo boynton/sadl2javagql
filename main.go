@@ -26,32 +26,56 @@ func main() {
 		fmt.Fprintf(os.Stderr, "usage: sadl2java -dir projdir -src relative_source_dir -rez relative_resource_dir -package java.package.name -pom -server -getters -lombok some_model.sadl\n")
 		os.Exit(1)
 	}
-	model, err := sadl.ParseFile(argv[0], graphql.NewExtension())
+	config := sadl.NewData()
+	config.Put("model", true)
+	config.Put("server", true)
+	config.Put("example-implementation", false)
+	if *pSrc != "" {
+		config.Put("source", *pSrc)
+	}
+	if *pRez != "" {
+		config.Put("resource", *pRez)
+	}
+	if *pPackage != "" {
+		config.Put("package", *pPackage)
+	}
+	if *pLombok {
+		config.Put("lombok", true)
+	}
+	if *pGetters {
+		config.Put("getters", true)
+	}
+	if *pInstants {
+		config.Put("instants", true)
+	}
+	model, err := sadl.ParseSadlFile(argv[0], config, graphql.NewExtension())
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "*** %v\n", err)
 		os.Exit(1)
 	}
-	gen := graphql.NewGenerator(model, *pDir, *pSrc, *pRez, *pPackage, *pLombok, *pGetters, *pInstants)
-	for _, td := range model.Types {
-		gen.CreatePojoFromDef(td)
-	}
-	if gen.NeedTimestamps {
-		gen.CreateTimestamp()
-	}
-	gen.CreateJsonUtil()
+	gen := graphql.NewGenerator(model, *pDir, config)
+	gen.CreateModel()
+	/*	for _, td := range model.Types {
+			gen.CreatePojoFromDef(td, nil)
+		}
+		if gen.NeedTimestamp {
+			gen.CreateTimestamp()
+		}
+		gen.CreateUtil()
+	*/
 	if gen.Err != nil {
 		fmt.Fprintf(os.Stderr, "*** %v\n", err)
 		os.Exit(1)
 	}
 	if *pServer {
-		gen.CreateGraphqlServer(*pSrc, *pRez)
+		gen.CreateGraphqlServer()
 	}
 	if *pPom {
 		domain := os.Getenv("DOMAIN")
 		if domain == "" {
 			domain = "my.domain"
 		}
-		gen.CreatePom(domain, model.Name, *pDir, *pLombok, graphqlDepends)
+		gen.CreatePom(graphqlDepends)
 	}
 	if gen.Err != nil {
 		fmt.Fprintf(os.Stderr, "*** %v\n", gen.Err)

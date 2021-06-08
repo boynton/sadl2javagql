@@ -1,6 +1,6 @@
 all:: bin/sadl2javagql
-	./bin/sadl2javagql -dir gen -package model -pom -server examples/swapi.sadl
-	cp examples/javaswapiimpl/Main.java gen/src/main/java
+	./bin/sadl2javagql -dir gen -package swapi -pom -server examples/swapi.sadl
+	cp examples/javaswapiimpl/SwapiController.java gen/src/main/java
 	(cd gen; mvn compile && mvn exec:java)
 
 bin/sadl2javagql::

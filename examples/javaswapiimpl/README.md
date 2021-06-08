@@ -17,7 +17,7 @@ same types, and utilizing the generated HTTP operations as data resolvers for Gr
 
 Then, from another terminal, try some queries:
 
-    $ curl -s -H "Content-type: application/json" http://localhost:8080/graphql -d '{"query": "{films { id, name, cast {id, name} } }"}' | json
+    $ curl -s -H "Content-type: application/json" http://localhost:8000/graphql -d '{"query": "{films { id, name, cast {id, name} } }"}' | json
     {
        "data": {
           "films": [
